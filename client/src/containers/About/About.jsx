@@ -3,7 +3,7 @@ import "./About.scss";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useEffect } from "react";
-import { client } from "../../client";
+import { client, urlFor } from "../../client";
 
 const About = () => {
   const [abouts, setAbouts] = useState([]);
@@ -11,10 +11,7 @@ const About = () => {
   useEffect(() => {
     const query = '*[_type == "abouts"]';
 
-    client.fetch(query).then((data) => {
-      console.log("Data: ", data);
-      setAbouts(data);
-    });
+    client.fetch(query).then((data) => setAbouts(data));
   }, []);
 
   return (
@@ -32,7 +29,7 @@ const About = () => {
             className="app__profile-item"
             key={about.title + index}
           >
-            <img src={about.imgUrl} alt={about.title} />
+            <img src={urlFor(about.imgUrl)} alt={about.title} />
             <h2 className="bold-text" style={{ marginTop: 20 }}>
               {about.title}
             </h2>
