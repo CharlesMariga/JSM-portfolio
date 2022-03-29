@@ -19,7 +19,19 @@ const Work = () => {
     });
   }, []);
 
-  const handleWorkFilter = () => {};
+  const handleWorkFilter = (item) => {
+    setActiveFilter(item);
+    setAnimateCard([{ y: 100, opacity: 0 }]);
+
+    setTimeout(() => {
+      setAnimateCard([{ y: 0, opacity: 1 }]);
+      if (item === "All") {
+        setFilterWork(works);
+      } else {
+        setFilterWork(works.filter((work) => work.tags.includes(item)));
+      }
+    }, 500);
+  };
 
   return (
     <>
@@ -31,7 +43,7 @@ const Work = () => {
           (item, index) => (
             <div
               key={index}
-              onClick={() => handleWorkFilter()}
+              onClick={() => handleWorkFilter(item)}
               className={`app__work-filter-item app__flex p-text ${
                 activeFilter === item ? "item-active" : ""
               }`}
